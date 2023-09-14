@@ -44,6 +44,13 @@ final class BTConfiguration {
     var maskBackgroundOpacity: CGFloat!
     var shouldChangeTitleText: Bool!
     
+    // Detail Text
+    var menuDetailTextColor: UIColor?
+    var menuDetailTextFont: UIFont!
+    var cellDetailTextLabelColor: UIColor?
+    var selectedCellDetailTextLabelColor: UIColor?
+    var cellDetailTextLabelFont: UIFont!
+    
     init() {
         // Path for image
         let bundle = Bundle(for: BTConfiguration.self)
@@ -72,5 +79,10 @@ final class BTConfiguration {
         self.maskBackgroundColor = UIColor.black
         self.maskBackgroundOpacity = 0.3
         self.shouldChangeTitleText = true
+        
+        cellDetailTextLabelColor = UIColor.darkGray
+        selectedCellDetailTextLabelColor = UIColor.darkGray
+        cellDetailTextLabelFont = .systemFont(ofSize: 12)
+        menuDetailTextFont = .systemFont(ofSize: 12)
     }
 }

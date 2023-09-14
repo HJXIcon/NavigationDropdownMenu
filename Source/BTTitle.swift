@@ -33,6 +33,6 @@ import Foundation
              Items is defined from BTNavigationDropdownMenu initialization.
  */
 public enum BTTitle {
-    case title(String)
+    case title(BTItem)
     case index(Int)
 }

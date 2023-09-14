@@ -30,18 +30,18 @@ class BTTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     var selectRowAtIndexPathHandler: ((_ indexPath: Int) -> ())?
     
     // Private properties
-    var items: [String] = []
+    var items: [BTItem] = []
     var selectedIndexPath: Int?
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(frame: CGRect, items: [String], title: String, configuration: BTConfiguration) {
+    init(frame: CGRect, items: [BTItem], currentItem item: BTItem, configuration: BTConfiguration) {
         super.init(frame: frame, style: UITableView.Style.plain)
         
         self.items = items
-        self.selectedIndexPath = items.firstIndex(of: title)
+        self.selectedIndexPath = items.firstIndex(where: { $0.text == item.text && $0.detailText == item.detailText })
         self.configuration = configuration
         
         // Setup table view
@@ -75,8 +75,10 @@ class BTTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = BTTableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "Cell", configuration: self.configuration)
-        cell.textLabel?.text = self.items[(indexPath as NSIndexPath).row]
+        let item = items[indexPath.row]
+        let cell = BTTableViewCell(style: .subtitle, reuseIdentifier: "Cell", configuration: self.configuration, hasDetailText: !item.detailText.isEmpty)
+        cell.textLabel?.text = item.text
+        cell.detailTextLabel?.text = item.detailText
         cell.checkmarkIcon.isHidden = ((indexPath as NSIndexPath).row == selectedIndexPath) ? false : true
         return cell
     }

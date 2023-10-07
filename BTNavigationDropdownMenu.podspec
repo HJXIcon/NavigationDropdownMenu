@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author       = { "Tho Pham" => "phambatho@gmail.com" }
   s.platform     = :ios, '9.0'
-  s.source       = { :git => "https://github.com/PhamBaTho/BTNavigationDropdownMenu.git", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/HJXIcon/NavigationDropdownMenu.git", :tag => s.version.to_s }
   s.source_files  = "Source/**/*.swift"
   s.resources = "Source/*.bundle"
   s.requires_arc = true

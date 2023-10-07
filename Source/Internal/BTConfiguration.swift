@@ -51,6 +51,10 @@ final class BTConfiguration {
     var selectedCellDetailTextLabelColor: UIColor?
     var cellDetailTextLabelFont: UIFont!
     
+    var labelSpacing: CGFloat = 8
+    
+    var cellLabelSpacing: CGFloat = 8
+    
     init() {
         // Path for image
         let bundle = Bundle(for: BTConfiguration.self)

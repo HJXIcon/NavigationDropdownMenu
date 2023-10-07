@@ -29,6 +29,24 @@ import UIKit
 // MARK: BTNavigationDropdownMenu
 open class BTNavigationDropdownMenu: UIView {
 
+    open var labelSpacing: CGFloat {
+        set {
+            configuration.labelSpacing = newValue
+        }
+        get {
+            self.configuration.labelSpacing
+        }
+    }
+    
+    open var cellLabelSpacing: CGFloat {
+        set {
+            configuration.cellLabelSpacing = newValue
+        }
+        get {
+            self.configuration.cellLabelSpacing
+        }
+    }
+    
     // The color of menu title. Default is darkGrayColor()
     open var menuTitleColor: UIColor! {
         get {
@@ -45,6 +63,7 @@ open class BTNavigationDropdownMenu: UIView {
         }
         set(value) {
             self.configuration.menuDetailTextColor = value
+            self.menuDetailTextLabel?.textColor = value
         }
     }
     
@@ -272,8 +291,22 @@ open class BTNavigationDropdownMenu: UIView {
         - items: The array of items to select
      */
     public init(navigationController: UINavigationController? = nil, containerView: UIView = UIApplication.shared.keyWindow!, title: BTTitle, items: [BTItem]) {
+        
+        let keyWindow = {
+            var window: UIWindow?
+            if #available(iOS 13, *) {
+                window = UIApplication.shared.connectedScenes
+                    .compactMap { $0 as? UIWindowScene }
+                    .flatMap { $0.windows }
+                    .first(where: { $0.isKeyWindow })
+            } else {
+                window = UIApplication.shared.keyWindow
+            }
+            return window
+        }()
+        
         // Key window
-        guard let window = UIApplication.shared.keyWindow else {
+        guard let window = keyWindow else {
             super.init(frame: CGRect.zero)
             return
         }
@@ -406,19 +439,20 @@ open class BTNavigationDropdownMenu: UIView {
             detailSize = menuDetailTextLabel.frame.size
         }
         
-        let offsetY = detailSize == nil ? 0 : detailSize!.height/2
+        let offsetY = detailSize == nil ? 0 : detailSize!.height/2 + labelSpacing/2.0
         
         self.menuTitle.sizeToFit()
         self.menuTitle.center = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2 - offsetY)
+        let dY = menuTitle.frame.maxY + labelSpacing/2.0
         if menuDetailTextLabel?.textAlignment == .center {
-            self.menuDetailTextLabel?.frame.origin = CGPoint(x: (self.frame.size.width - (detailSize?.width ?? 0))/2.0, y: menuTitle.frame.maxY)
+            self.menuDetailTextLabel?.frame.origin = CGPoint(x: (self.frame.size.width - (detailSize?.width ?? 0))/2.0, y: dY)
         }
         else if menuDetailTextLabel?.textAlignment == .left {
-            menuDetailTextLabel?.frame.origin = .init(x: menuTitle.frame.minX, y: menuTitle.frame.maxY)
+            menuDetailTextLabel?.frame.origin = .init(x: menuTitle.frame.minX, y: dY)
         }
         else {
             let w = detailSize?.width ?? 0
-            menuDetailTextLabel?.frame.origin = .init(x: menuTitle.frame.width-w/2.0, y: menuTitle.frame.maxY)
+            menuDetailTextLabel?.frame.origin = .init(x: menuTitle.frame.width-w/2.0, y: dY)
         }
         self.menuTitle.textColor = self.configuration.menuTitleColor
         self.menuArrow.sizeToFit()

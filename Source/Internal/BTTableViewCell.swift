@@ -45,7 +45,7 @@ class BTTableViewCell: UITableViewCell {
         // Setup cell
         cellContentFrame = CGRect(x: 0, y: 0, width: (UIApplication.shared.keyWindow?.frame.width)!, height: self.configuration.cellHeight)
         
-        let y = max(0, (cellContentFrame.height - totalHeight)/2.0)
+        let y = max(0, (cellContentFrame.height - totalHeight)/2.0 - configuration.cellLabelSpacing/2.0)
         
         self.contentView.backgroundColor = self.configuration.cellBackgroundColor
         self.selectionStyle = .none
@@ -59,13 +59,16 @@ class BTTableViewCell: UITableViewCell {
         
         if self.textLabel!.textAlignment == .center {
             self.textLabel!.frame = CGRect(x: 0, y: y, width: cellContentFrame.width, height: titleHeight)
-            detailTextLabel?.frame = .init(x: 0, y: textLabel!.frame.maxY, width: cellContentFrame.width, height: detailHeight)
+            let dY = textLabel!.frame.maxY + configuration.cellLabelSpacing/2.0
+            detailTextLabel?.frame = .init(x: 0, y: dY, width: cellContentFrame.width, height: detailHeight)
         } else if self.textLabel!.textAlignment == .left {
             self.textLabel!.frame = CGRect(x: horizontalMargin, y: y, width: cellContentFrame.width, height: titleHeight)
-            detailTextLabel?.frame = .init(x: horizontalMargin, y: textLabel!.frame.maxY, width: cellContentFrame.width, height: detailHeight)
+            let dY = textLabel!.frame.maxY + configuration.cellLabelSpacing/2.0
+            detailTextLabel?.frame = .init(x: horizontalMargin, y: dY, width: cellContentFrame.width, height: detailHeight)
         } else {
             self.textLabel!.frame = CGRect(x: -horizontalMargin, y: y, width: cellContentFrame.width, height: titleHeight)
-            detailTextLabel?.frame = .init(x: -horizontalMargin, y: textLabel!.frame.maxY, width: cellContentFrame.width, height: detailHeight)
+            let dY = textLabel!.frame.maxY + configuration.cellLabelSpacing/2.0
+            detailTextLabel?.frame = .init(x: -horizontalMargin, y: dY, width: cellContentFrame.width, height: detailHeight)
         }
         
         // Checkmark icon

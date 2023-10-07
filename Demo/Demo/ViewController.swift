@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let items = ["Most Popular", "Latest", "Trending", "Nearest", "Top Picks"].enumerated().map({ BTItem(text: $0.element, detailText: "\($0.offset)") })
+        let items = ["Most Popular", "Latest", "Trending", "Nearest", "Top Picks"].enumerated().map({ BTItem(text: $0.element, detailText: "\($0.offset)" + $0.element) })
         self.selectedCellLabel.text = items.first?.text
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.0/255.0, green:180/255.0, blue:220/255.0, alpha: 1.0)
@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         menuView.menuDetailTextColor = .white
         menuView.cellTextLabelColor = UIColor.white
         menuView.cellTextLabelFont = UIFont(name: "Avenir-Heavy", size: 17)
-        menuView.cellTextLabelAlignment = .left // .Center // .Right // .Left
+        menuView.cellTextLabelAlignment = .right // .Center // .Right // .Left
         menuView.arrowPadding = 15
         menuView.animationDuration = 0.5
         menuView.maskBackgroundColor = UIColor.black

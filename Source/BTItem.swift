@@ -11,4 +11,9 @@ import UIKit
 public struct BTItem {
     var text: String
     var detailText: String
+    
+    public init(text: String, detailText: String) {
+        self.text = text
+        self.detailText = detailText
+    }
 }

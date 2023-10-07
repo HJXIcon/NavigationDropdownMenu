@@ -144,6 +144,8 @@ open class BTNavigationDropdownMenu: UIView {
         }
         set(value) {
             self.configuration.cellTextLabelAlignment = value
+            menuTitle.textAlignment = value
+            menuDetailTextLabel?.textAlignment = value
         }
     }
 
@@ -408,7 +410,16 @@ open class BTNavigationDropdownMenu: UIView {
         
         self.menuTitle.sizeToFit()
         self.menuTitle.center = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2 - offsetY)
-        self.menuDetailTextLabel?.center = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height/2 + offsetY)
+        if menuDetailTextLabel?.textAlignment == .center {
+            self.menuDetailTextLabel?.frame.origin = CGPoint(x: (self.frame.size.width - (detailSize?.width ?? 0))/2.0, y: menuTitle.frame.maxY)
+        }
+        else if menuDetailTextLabel?.textAlignment == .left {
+            menuDetailTextLabel?.frame.origin = .init(x: menuTitle.frame.minX, y: menuTitle.frame.maxY)
+        }
+        else {
+            let w = detailSize?.width ?? 0
+            menuDetailTextLabel?.frame.origin = .init(x: menuTitle.frame.width-w/2.0, y: menuTitle.frame.maxY)
+        }
         self.menuTitle.textColor = self.configuration.menuTitleColor
         self.menuArrow.sizeToFit()
         self.menuArrow.center = CGPoint(x: self.menuTitle.frame.maxX + self.configuration.arrowPadding, y: menuTitle.center.y)
